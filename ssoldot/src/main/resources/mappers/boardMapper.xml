@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ssoldot.mapper.BoardMapper">
+
+	<insert id="create">
+		insert into board (b_id, b_title,b_content, member_id, file_gid) 
+		values(seq_bid.nextval ,#{b_title},#{b_content},'임재민',1)
+	</insert>
+	
+	<select id="read" resultType="org.ssoldot.domain.BoardVO">
+	 select *
+	 from board 
+	 where b_id = #{b_id}
+	</select>
+	
+	<update id="update">
+	update board set b_title =#{b_title}, b_content =#{b_content} 
+	where b_id = #{b_id}
+	
+	</update>
+
+	<delete id="delete">
+		delete from board where b_id = #{b_id}
+	</delete>
+	<!-- 
+	mybatis 사용시 쿼리문에 문자열 비교연산자나 부등호를 처리 할때
+	<와 같은 기호를 괄호인지 아니면 비교연산자 인지 확인이 불가능하여
+	<![CDATA[]] 를 사용하는데 안에 들어가는 문장을 문자열로 인식하게 한다.
+	 -->
+	<select id="listAll" resultType="org.ssoldot.domain.BoardVO">
+		<![CDATA[
+		select x.b_id,x.b_title, x.b_content,x.b_cnt,x.member_id, x.b_regdate
+			from ( 
+    			select rownum as rnum, a.b_id,a.b_title, a.b_content,a.b_cnt,a.member_id, a.b_regdate
+    			from (
+        			select b_id,b_title, b_content,b_cnt,member_id, b_regdate
+        			from board
+        			order by b_id) a
+    			where rownum <= (#{perPageNum}*#{page})) X
+			where X.rnum >= (#{page}-1)*10
+		]]>
+	</select>
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+		select count(b_id)
+		from board
+		where b_id > 0
+	]]>
+	</select>
+	<update id="updateViewCnt">
+	update board 
+	set b_cnt = b_cnt +1 
+	where b_id = #{b_id}
+	</update>
+	
+</mapper>
