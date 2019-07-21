@@ -58,18 +58,7 @@
 			<!-- mypage_tab  -->
 			<div id="cMain" class="">
 				<div id="mFeature">
-					<div class="aside_profile">
-						<h3 class="screen_out">프로필</h3>
-						<div class="wrap_thumb">
-							<a href="/member/account/info" aria-current="page" class="active"><img
-								src="//img1.daumcdn.net/thumb/C100x100/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fblog%2Fadmin%2Fprofile_default_06.png"
-								width="100" height="100" class="thumb_img" alt=""></a>
-						</div>
-						<div class="wrap_cont">
-							<strong class="tit_profile">닉네임</strong>
-							<span class="txt_ellip">${vo.nickname}</span>
-						</div>
-					</div>
+					
 					
 					<jsp:include page="layout/mypage_tab.jsp" />
 					</div>
@@ -78,7 +67,7 @@
 						<h2 id="kakaoBody" class="screen_out">계정관리 본문</h2>
 						<div class="member_basic">
 							<h3 class="tit_cont">비밀번호 변경</h3>
-							<form class="wrap_set" name="join_frm" action="${pageContext.request.contextPath}/member/modify" method="post">
+							<form class="wrap_set" name="join_frm" action="${pageContext.request.contextPath}/member/mypage/modify" onsubmit="return insertChk(this);" method="post">
 								<fieldset class="fld_name">
 									<legend class="screen_out">비밀번호 설정</legend>
 									<label class="lab_tf">
@@ -99,6 +88,8 @@
 									<legend class="screen_out">저장 버튼</legend>
 									<input type="submit" value="변경사항 저장" class="btn_save btn_off">
 								</fieldset>
+								<input type="hidden" id="passChk" value="N" />
+                                <input type="hidden" id="confChk" value="N" />
 							</form>
 							
 						</div>
@@ -129,23 +120,24 @@
 				//var PT_pwtype = /^(?=([a-zA-Z]+[0-9]+[a-zA-Z0-9]*|[0-9]+[a-zA-Z]+[a-zA-Z0-9]*)$).{6,18}/;
 				//var PT_pwtype = /^(?=([a-zA-Z0-9]+[!,@,#,$,%,^,&,*,?,_,~]*)|([!,@,#,$,%,^,&,*,?,_,~]+[a-zA-Z0-9])$).{6,18}/;
 				var PT_pwtype = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*+=-])(?=.*[0-9]).{6,18}$/;
+				pwconCheck(obj);
 				if(!PT_pwtype.test(frm.password.value)) {
 					$("#pwconcheck_text").css("color","#FF5A00").html('영문 대소문자, 숫자 및 특수문자 6~18자 조합 입력하세요.');
 					//6~18 자리의 영문과 숫자 조합이어야만 합니다
-					$("#pw_flag").val("");
+					$("#passChk").val('N');
 					return false
 				} else {
 					if(frm.password.value.length < 6 || frm.password.value.length > 18 ){
 						$("#pwconcheck_text").css("color","#FF5A00").html('영문 대소문자, 숫자 및 특수문자 6~18자 조합 입력하세요.');
 						//6~18 자리의 영문과 숫자 조합이어야만 합니다
-						$("#pw_flag").val("");
+						$("#passChk").val('N');
 						return false
 					}
 					$("#pwconcheck_text").css("color","#00B050").html('이 비밀번호는 사용가능 합니다.');
 					//이 비밀번호는 사용할 수 있습니다
-					$("#pw_flag").val("Y");
+					$("#passChk").val('Y');
 				}
-				pwconCheck(obj);
+				
 			}
 			function pwconCheck(obj){
 				var frm=document.join_frm;
@@ -153,18 +145,32 @@
 					if(frm.password.value != frm.password2.value){
 						$("#pwconcheck_textRe").css("color","#FF5A00").html('비밀번호가 일치하지 않습니다.');
 						//비밀번호가 일치하지 않습니다
-						$("#pw_con_flag").val("");
+						$("#confChk").val("N");
 						return false;
 					}
 					$("#pwconcheck_textRe").css("color","#00B050").html('비밀번호가 일치합니다.');
 					//'비밀번호가 일치합니다.'
-					$("#pw_con_flag").val("Y");
+					$("#confChk").val("Y");
 				} else {
 					$("#pwconcheck_textRe").html('');
-					$("#pw_con_flag").val("");
+					$("#pw_con_flag").val('N');
 					return false;
 				}
 			}
+			
+			function insertChk(){
+				var frm=document.join_frm;
+				if($("#passChk").val() == 'N'){
+					frm.password.focus();
+					return false;
+				} 
+				if($("#confChk").val() == 'N'){
+					frm.password2.focus();
+					return false;
+				}
+				
+			}
+
 			</script>
 			
 

@@ -53,8 +53,10 @@
 		$("#btnDelete").click(function(){
 			//확인창
 			if(confirm("삭제하시겠습니까?")){
-				document.join_frm.action = "${pageContext.request.contextPath}/member/delete";
+				document.join_frm.action="${pageContext.request.contextPath}/member/mypage/delete";
 				document.join_frm.submit()
+			} else {
+				return false;
 			}
 			
 		});
@@ -71,18 +73,7 @@
 			<!-- mypage_tab  -->
 			<div id="cMain" class="">
 				<div id="mFeature">
-					<div class="aside_profile">
-						<h3 class="screen_out">프로필</h3>
-						<div class="wrap_thumb">
-							<a href="/member/account/info" aria-current="page" class="active"><img
-								src="//img1.daumcdn.net/thumb/C100x100/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fblog%2Fadmin%2Fprofile_default_06.png"
-								width="100" height="100" class="thumb_img" alt=""></a>
-						</div>
-						<div class="wrap_cont">
-							<strong class="tit_profile">닉네임</strong>
-							<span class="txt_ellip">${vo.nickname}</span>
-						</div>
-					</div>
+					
 					
 					<jsp:include page="layout/mypage_tab.jsp" />
 					</div>
@@ -91,7 +82,7 @@
 						<h2 id="kakaoBody" class="screen_out">계정관리 본문</h2>
 						<div class="member_basic">
 							<h3 class="tit_cont">회원탈퇴</h3>
-							<form class="wrap_set" name="join_frm"  method="post">
+							<form class="wrap_set" name="join_frm" method="post">
 								<fieldset class="fld_name">
 									<legend class="screen_out">비밀번호 설정</legend>
 									<label class="lab_tf">
@@ -110,7 +101,7 @@
 								
 								<fieldset>
 									<legend class="screen_out">저장 버튼</legend>
-									<input type="button" id="btnDelete" value="탈퇴하기" class="btn_save btn_off">
+									<input type="submit" id="btnDelete" value="탈퇴하기" class="btn_save btn_off">
 								</fieldset>
 							</form>
 							

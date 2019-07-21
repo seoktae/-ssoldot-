@@ -35,8 +35,7 @@
 		</constructor-arg>
 	</bean>
 	
-	
-	<!-- MessageSource -->
+	<!-- 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="defaultEncoding">
@@ -45,11 +44,38 @@
 
 		<property name="basenames">
 			<list>
-				<value>messages/messages_ko</value>
+				<value>/WEB-INF/message/security_message</value>
 			</list>
 		</property>
 
 	</bean>
+	 -->
+	<!-- gmail -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="ssoldot2@gmail.com" />
+        <property name="password" value="qorhvk1!" />
+       
+        <property name="javaMailProperties">
+            <props>
+               <prop key="mail.transport.protocol">smtp</prop>
+               <prop key="mail.smtp.auth">true</prop>
+               <prop key="mail.smtp.starttls.enable">true</prop>
+               <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+       
+    </bean>
+	<bean id="email" class="org.ssoldot.domain.EmailVO">
+    </bean>
+    <bean id="emailSender" class="org.ssoldot.domain.EmailSender">
+    </bean>
+
+
+
 	
 		
 	<context:component-scan base-package="org.ssoldot.dao"/>

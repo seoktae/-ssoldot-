@@ -38,7 +38,7 @@
 				
 				<s:authorize ifAnyGranted="ROLE_USER, ROLE_ADMIN">
     	     	<s:authentication property="name" var="loginUser"/>
-    	     	<a class="nav-link" href="${pageContext.request.contextPath}/member/mypage">마이 페이지</a>
+    	     	<a class="nav-link" href="${pageContext.request.contextPath}/member/mypage/info">마이 페이지</a>
         		</s:authorize>
 				
 				</li>

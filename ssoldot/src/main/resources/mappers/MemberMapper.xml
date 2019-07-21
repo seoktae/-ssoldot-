@@ -12,17 +12,22 @@
 	</insert>
 	<!-- 회원정보 변경 -->
 	<update id="update_mypage">
-		update member set nickname = #{nickname} where member_id = #{member_id}
+		update member
+		set nickname = #{nickname}, or_picname = #{or_picname}, st_picname = #{st_picname}
+		where member_id = #{member_id}
 	</update>
 	 
 	<!-- 회원정보 가져오기  -->
 	<select id="selectMember" resultType="org.ssoldot.domain.MemberVO">
-		select member_id, nickname, st_picname from member where member_id = #{member_id}
+		select *
+		from member 
+		where member_id = #{member_id}
 	</select>
 	
 	<!-- 비밀번호 변경  -->
 	<update id="updatePassword">
-		update member set password = #{password} where member_id = #{member_id}
+		update member 
+		set password = #{password} where member_id = #{member_id}
 	</update>
 
 	<!-- 회원 비밀번호 확인 -->
@@ -38,5 +43,18 @@
 		where member_id = #{member_id} and password = #{password}
 	</delete>
 	
+	<!-- 회원 아이디 확인 -->
+	<select id="checkId" resultType="int">
+		select count(*)
+		from member
+		where member_id = #{member_id}
+	</select>
+	
+	<!-- 닉네임 확인 -->
+	<select id="checkNickname" resultType="int">
+		select count(*)
+		from member
+		where nickname = #{nickname}
+	</select>
 	
 </mapper>

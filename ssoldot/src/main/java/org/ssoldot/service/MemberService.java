@@ -16,4 +16,8 @@ public interface MemberService {
 
 	public void deleteMember(MemberVO member) throws Exception;
 
+	public boolean checkId(String member_id) throws Exception;
+
+	public boolean checkNickname(String nickname) throws Exception;
+
 }

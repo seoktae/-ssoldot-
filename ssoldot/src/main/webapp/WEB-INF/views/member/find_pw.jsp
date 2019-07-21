@@ -34,6 +34,7 @@
 }
 </style>
 
+
 <body>
 
   <!-- Navigation -->
@@ -46,48 +47,33 @@
 				<!-- login -->
 				<input type="hidden" id="url" value="/">
 				<div class="wrap-login-area">
-					<h2 class="font-en">LOGIN</h2>
-
-					<p class="desc">
-						방문을 환영합니다. 
-					</p>
-					<c:if test="${ param.login_error != null }">
-						<p class="desc" style="color:red; text-align:center">
-						아이디 또는 패스워드가  일치하지 않습니다. <br> 
-         				</p>
-					</c:if>
+					<h2 class="font-en">비밀번호 찾기</h2>
 					
 					
-					<div class="wrap-login">
+					<div class="wrap-idpw-search">
 						<div class="login">
 							<div class="wrap-tab-cont">
+					<nav class="navi-tab jq-tab-type2"></nav>
 								<section class="tab-cont active" id="tab01">
-									<h3 class="hidden">회원 로그인</h3>
-									<form action='<c:url value="/j_spring_security_check" />'
-										method="post" name="login_frm"
-										onsubmit="return CheckFormValue(this);" target="act">
+									<p class="search-desc">계정을 잊으셨나요?<br>
+						등록된 이메일을 입력하시면 임시 비밀번호를 보내드립니다. </p>
+									<!-- <form 
+										method="post" name="find_pw"
+										onsubmit="return CheckFormValue(this);" target="act"> -->
+										<div class="idpw-search">
 										<input type="hidden" name="act2" value="">
 										<div class="field">
-											<input type="text" name="j_username" value="" validation="true"
-												id="id" style="ime-mode: disabled;"
-												onkeyup="crImeMode(this)" onkeypress="crImeMode(this)">
+											<label for="name">이메일</label>
+											<input type="text" name="member_id" id="member_id" value="" validation="true"
+												id="id" style="width:360px;"
+												onkeyup="crImeMode(this)" onkeypress="crImeMode(this)" >
 										</div>
-										<div class="field">
-											<input type="password" name="j_password" validation="true" id="pw">
+										
 										</div>
-										<!-- 
-										<p class="login-function save-id">
-											<input type="checkbox" id="chk_saveID" name="chk_saveID" value="Y">
-											<label for="chk_saveID">아이디 저장</label>
-										</p>
-										 -->
-										<input type="submit" class="btn-login" value="로그인">
-										<a href="${pageContext.request.contextPath}/member/join" class="btn-join">회원가입</a>
-										<p class="login-function">
-											<a href="/member/search_idpw.php?view_type=0">아이디 찾기</a>
-											<a href="${pageContext.request.contextPath}/member/find_pw">비밀번호 찾기</a>
-										</p>
-									</form>
+										<div class="btn-area">
+										<input type="submit" id="findBtn" value="비밀번호 찾기">
+										</div>
+									<!-- </form> -->
 								</section>
 							</div>
 						</div>
@@ -102,10 +88,47 @@
 	<!-- Footer -->
   <jsp:include page="../layout/footer.jsp"/>
 
+ 
   <!-- Bootstrap core JavaScript -->
   <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+	
+  <script>
+	$(function(){
+		$("#findBtn").click(function(){
+			$.ajax({
+				url : "../member/find_pw",
+				type : "POST",
+				data : {
+					member_id : $("#member_id").val()
+				},
+				success : function(result) {
+					alert(result);
+				},
+			})
+		});
+	})
+  </script>
+  <%-- 
+ <script>
+  	$("#btnFind").click(function(){
+  		var f = document.find_pw;
+		if(find_pw.member_id.value==""){
+			alert("이메일을 입력해 주세요.");
+		}
+		f.action="action='${pageContext.request.contextPath}/member/find_pw";
+		f.submit()
+		
+	});
+  	<%
+  	String param = request.getParameter("message");
+  	%>
+  	var msg = <%=param %>;
+  	if (msg != null) {
+		alert("성공");
+	}
+	</script>	
+   --%>
 </body>
 
 </html>

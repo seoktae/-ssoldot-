@@ -49,4 +49,20 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.delete(namespace+".deleteMember", vo);
 	}
 
+	@Override
+	public boolean checkPw(String member_id) throws Exception {
+		boolean result = false;
+		int count = sqlSession.selectOne(namespace+".checkId", member_id);
+		if (count == 1) result = true;
+		return result;
+	}
+
+	@Override
+	public boolean checkNickname(String nickname) throws Exception {
+		boolean result = false;
+		int count = sqlSession.selectOne(namespace+".checkNickname", nickname);
+		if (count == 1) result = true;
+		return result;
+	}
+
 }

@@ -50,19 +50,7 @@
 			<!-- mypage_tab  -->
 			<div id="cMain" class="">
 				<div id="mFeature">
-					<div class="aside_profile">
-						<h3 class="screen_out">프로필</h3>
-						<div class="wrap_thumb">
-							<a href="${pageContext.request.contextPath}/member/mypage" >
-							<img src="${pageContext.request.contextPath}/resources/member/profile_pic/${vo.st_picname}" width="100" height="100" class="thumb_img" alt="">
-							</a>
-						</div>
-						<div class="wrap_cont">
-							<a><br></a>
-							<strong class="tit_profile">${vo.member_id}</strong>
-							<span class="txt_ellip">${vo.nickname}</span>
-						</div>
-					</div>
+					
 					
 					<jsp:include page="layout/mypage_tab.jsp" />
 					</div>
@@ -71,15 +59,17 @@
 						<h2 id="kakaoBody" class="screen_out">계정관리 본문</h2>
 						<div class="member_basic">
 							<h3 class="tit_cont">기본 정보</h3>
-							<form class="wrap_set" action="${pageContext.request.contextPath}/member/mypage" method="post">
+							<form class="wrap_set" action="${pageContext.request.contextPath}/member/mypage/info" enctype="multipart/form-data" method="post">
+								<input type="hidden" name="st_picname" id="st_picname" value="${vo.st_picname}">
+								<input type="hidden" name="or_picname" id="or_picname" value="${vo.or_picname}">
 								<fieldset class="fld_image">
 									<legend class="screen_out">프로필 이미지 설정</legend>
 									<div class="wrap_thumb photo_profile">
-										<img
+										<img id="foo"
 											src="${pageContext.request.contextPath}/resources/member/profile_pic/${vo.st_picname}"
 											class="thumb_img" width="180" height="180" alt=""><label
 											class="lab_btn lab_photo"><span class="ico_member">블로그
-												이미지 찾아보기</span><input type="file" accept="image/*" class="btn_g"></label>
+												이미지 찾아보기</span><input type="file" name="file" id="file" class="btn_g" value=""></label>
 									</div>
 								</fieldset>
 								<fieldset class="fld_name">
@@ -108,7 +98,25 @@
   <!-- Bootstrap core JavaScript -->
   <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+  <!-- 사진 미리보기  -->
+  <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#foo').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
+    $("#file").change(function() {
+        readURL(this);
+    });
+   </script>
+    
+    
 </body>
 
 </html>

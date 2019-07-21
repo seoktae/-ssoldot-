@@ -44,4 +44,14 @@ public class MemberServiceImpl implements MemberService{
 		dao.delteMember(member);
 	}
 
+	@Override
+	public boolean checkId(String member_id) throws Exception {
+		return dao.checkPw(member_id);
+	}
+
+	@Override
+	public boolean checkNickname(String nickname) throws Exception {
+		return dao.checkNickname(nickname);
+	}
+
 }
