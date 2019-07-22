@@ -1,6 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.min.js"></script>
+<head>
+<!-- Bootstrap core CSS -->
+<link
+	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap2.css"
+	rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link
+	href="${pageContext.request.contextPath}/resources/css/heroic-features.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/operate.css"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="{ % block extrastyle % }{ % endblock % }">
+</head>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">

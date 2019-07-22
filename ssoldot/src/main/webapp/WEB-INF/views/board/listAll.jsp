@@ -2,8 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
-<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
-<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.min.js"></script>
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.css"
 	rel="stylesheet">
@@ -41,23 +40,14 @@
 	                        <c:forEach items="${list}" var="boardVO">
 		                        <tr>
 		                            <td>${boardVO.b_id}</td>
-		                            <td><a href='${pageContext.request.contextPath}/board/read?b_id=${boardVO.b_id}'>${boardVO.b_title}</a></td>
+		                            <td><a href='${pageContext.request.contextPath}/board/read?b_id=${boardVO.b_id}&member_id=${boardVO.member_id}' style='color:black;'>${boardVO.b_title}</a></td>
 		                            <td>${boardVO.member_id}</td>
 		                            <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.b_regdate}" /></td>
 		                            <td><span class="badge bg-red">${boardVO.b_cnt }</span></td>
 		                        </tr>
 		                    </c:forEach>
 	                    </table>
-	                    <s:authorize ifNotGranted="ROLE_USER">
-	                    
-	                    <button class="btn btn-primary" style="margin-left: 87%" onclick="location.href='${pageContext.request.contextPath}/member/login'">글쓰기</button>
-						</s:authorize>
-				
-						<s:authorize ifAnyGranted="ROLE_USER, ROLE_ADMIN">
-    	     			<s:authentication property="name" var="loginUser"/>
-	                    <button type="submit" class="btn btn-primary" style="margin-left: 87%" onclick="location.href='${pageContext.request.contextPath}/board/register'">글쓰기</button>
-        				</s:authorize>
-	                    
+	                    <button type="submit" class="btn btn-primary" style="margin-left: 87%" >글쓰기</button>
 					</div>
 					<!-- /.box-body -->
 					<div  class="box-footer" >
@@ -101,7 +91,6 @@
 		console.log($(this).text());
 	})
 </script>
-<!-- 
 <script>
     $(document).ready(function () {
         var formObj = $("form[role='form']");
@@ -111,5 +100,4 @@
         });
     });
 </script>
- -->
 <jsp:include page="../layout/footer.jsp" />

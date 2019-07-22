@@ -57,4 +57,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where b_id = #{b_id}
 	</update>
 	
+	<select id="selectUserFile" resultType="org.ssoldot.domain.FileVO">
+		select * from pic_file
+	<!-- 	where member_id = #{member_id} and file_snum = #{b_id} and file_gid =1 -->
+		where member_id = '임재민' and file_snum = 1 and file_gid =1
+		order by pic_id desc
+	</select>
+	
+	<insert id="insertBoardFirst">
+		insert into b_reply(br_id, br_content, br_ref ,br_step, br_depth, b_id, member_id) 
+		values(r_seq.nextval,#{br_content}, r_seq.currval ,0 , 0 , #{b_id} , '임재민')
+	</insert>
+	
+	<select id="selectBoardReplyParent" resultType="org.ssoldot.domain.BoardReplyVO">
+		select br_id, br_ref, br_step, br_depth from b_reply where b_id = #{b_id}
+	</select>
+	
+	<update id="updateReplySetting">
+		update b_reply 
+		set br_step = br_step + 1
+		where br_ref = #{b_ref} and br_step > #{br_step}
+	</update>
+	
+	<insert id="insertBoardAfter">
+		insert into b_reply(br_id, br_content, br_ref ,br_step, br_depth, b_id, member_id) 
+		values(r_seq.nextval,#{br_content}, #{br_ref} ,0 , 0 , #{b_id} , '임재민');
+	</insert>
+	
+	
+	<select id="selectComment" resultType="org.ssoldot.domain.BoardReplyVO">
+		SELECT * FROM b_reply where b_id = #{b_id} ORDER BY br_ref DESC, br_step ASC
+	</select>
+	
+	
 </mapper>
