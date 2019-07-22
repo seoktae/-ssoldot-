@@ -160,9 +160,10 @@ public class BoardController {
 		}
 		*/
 		
-		System.out.println(rvo.getB_id() +"@@"+rvo.getBr_content());
-		service.selectBoardReplyParent(rvo.getB_id());
-		
+		System.out.println(rvo.getBr_ref() + "@@" + rvo.getBr_step());
+		System.out.println(rvo.getBr_depth() + "@@@" + rvo.getB_id() + "@@@@" + rvo.getBr_content());
+		service.updateReplySetting(rvo);
+		service.insertBoardAfter(rvo);
 		
 		return "success";
 	}
@@ -182,7 +183,9 @@ public class BoardController {
                 hm.put("c_code", commentVO.get(i).getBr_id());
                 hm.put("comment", commentVO.get(i).getBr_content());
                 hm.put("writer", commentVO.get(i).getMember_id());
-                hm.put("depth",commentVO.get(i).getBr_depth());
+                hm.put("br_depth",commentVO.get(i).getBr_depth());
+                hm.put("br_ref",commentVO.get(i).getBr_ref());
+                hm.put("br_step",commentVO.get(i).getBr_step());
                 hm.put("regdate",commentVO.get(i).getBr_regdate());
                 
                 hmlist.add(hm);

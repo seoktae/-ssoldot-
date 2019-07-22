@@ -76,12 +76,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReplySetting">
 		update b_reply 
 		set br_step = br_step + 1
-		where br_ref = #{b_ref} and br_step > #{br_step}
+		where br_ref = #{br_ref} and br_step > #{br_step}
 	</update>
 	
 	<insert id="insertBoardAfter">
 		insert into b_reply(br_id, br_content, br_ref ,br_step, br_depth, b_id, member_id) 
-		values(r_seq.nextval,#{br_content}, #{br_ref} ,0 , 0 , #{b_id} , '임재민');
+		values(r_seq.nextval,#{br_content}, #{br_ref} ,#{br_step}+1 ,  #{br_depth}+1 , #{b_id} , '임재민')
 	</insert>
 	
 	

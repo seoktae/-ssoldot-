@@ -155,17 +155,22 @@ function fn_replyBox(code){
 	}
 }
 
-function fn_comments(code) {
+function fn_comments(code,br_ref,br_step,br_depth) {
+	/* var form = $("#editForm")[0];
+	var formData = new FormData(form); */
 	
+	var content = $("#br_content2").val();
+	alert(content);
 	$.ajax({
 		 type:'POST',
 	        url : "<c:url value='/board/addComments'/>",
-	        data:$("#commentForm").serialize(),
+	        data: {b_id:code , br_ref:br_ref,br_step:br_step, br_depth:br_depth, br_content:content},
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data){
 	            if(data=="success")
 	            {
 	                getCommentList();
-	                $("#comment").val("");
+	                $("#br_content2").val("");
 	            }
 	        },
 	        error:function(request,status,error){
@@ -192,10 +197,10 @@ function getCommentList() {
                     html += "<div style='border-bottom:1px solid #EAC3C3'>";	
 //                 	html += "<td width='100%' valign='top'>";
                     html += "<table width='100%' height='28' cellpadding='0' cellspacing='0'><tbody><tr><td style='width:5px'>";
-                    if (data[i].depth > 0) {
-                     	for (var j = 0; j <= data[j].depth; j++) {
+                    if (data[i].br_depth > 0) {
+                     	for (var j = 0; j <= data[i].br_depth; j++) {
                       		html += "<span>&nbsp&nbsp&nbsp&nbsp</span>";
-                      		if(j==data[j].depth)
+                      		if(j==data[i].br_depth)
                       		html += "<img src='${pageContext.request.contextPath}/resources/images/reply_icon.png' border='0' align='absmiddle' title='코멘트리플'></td>";
       					}
       				}
@@ -208,8 +213,8 @@ function getCommentList() {
 
                     html += "<table><tr style='display:none' id='clickreplydiv"+data[i].c_code+"'>";
                     html += "<div><td style='width: 90%'>";
-                    html += "<textarea style='width: 100%' rows='3' cols='30' id='br_content' name='br_content' placeholder='댓글을 입력하세요'></textarea></td>";
-				 	html += "<td style='width: 10%'><a href='#' onClick='fn_comments("+data[i].c_code+")';' class='btn pull-right btn-success' style='width:100%;  height: 100%; margin-top: 10px'>등록</a></td>";
+                    html += "<textarea style='width: 100%' rows='3' cols='30' id='br_content2' name='br_content2' placeholder='댓글을 입력하세요'></textarea></td>";
+				 	html += "<td style='width: 10%'><a href='#' onClick='fn_comments("+${boardVO.b_id}+','+data[i].br_ref+','+data[i].br_step+','+data[i].br_depth+ ")';' class='btn pull-right btn-success' style='width:100%;  height: 100%; margin-top: 10px'>등록</a></td>";
 					html += "</div></tr>";
                     html += "</table>";
                 }
